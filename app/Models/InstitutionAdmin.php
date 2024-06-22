@@ -9,4 +9,9 @@ class InstitutionAdmin extends Model
 {
     use HasFactory;
     protected $fillable = ['name','email','institution_id','password'];
+
+    public function institution()
+    {
+        return $this->hasOne(Institution::class);
+    }
 }

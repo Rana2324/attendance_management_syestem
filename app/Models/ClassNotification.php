@@ -9,4 +9,15 @@ class ClassNotification extends Model
 {
     use HasFactory;
     protected $fillable = ['class_id','notification_id'];
+
+    public function classModel()
+    {
+        return $this->hasMany(ClassModel::class);
+    }
+
+
+    public function notification()
+    {
+        return $this->hasOne(Notification::class);
+    }
 }
