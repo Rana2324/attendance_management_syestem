@@ -1,11 +1,15 @@
 import { createRouter,createWebHistory } from "vue-router";
-import Home from '@/views/Home.vue';
-import About from '@/views/About.vue';
+import Dashboard from "../views/SuperAdmin/Dashboard.vue";
+import Admin from "../views/SuperAdmin/Admin.vue";
+import Institution from "../views/SuperAdmin/Institution.vue";
+import Analytics from "../views/SuperAdmin/Analytics.vue";
 
 
 const routes = [
-    {path:'/',component:Home},
-    {path:'/about',component:About},
+    {path:'/',component:Dashboard,name:'Dashboard'},
+    {path:'/admin',component:Admin,name:'Admin'},
+    {path:'/institution',component:Institution,name:'Institution'},
+    {path:'/analytics',component:Analytics,name:'Analytics'},
 ];
 
 
