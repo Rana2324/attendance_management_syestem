@@ -3,6 +3,7 @@ import Dashboard from "../views/SuperAdmin/Dashboard.vue";
 import Admin from "../views/SuperAdmin/Admin.vue";
 import Institution from "../views/SuperAdmin/Institution.vue";
 import Analytics from "../views/SuperAdmin/Analytics.vue";
+import CreateInstitution from "../views/SuperAdmin/CreateInstitution.vue";
 
 
 const routes = [
@@ -10,6 +11,7 @@ const routes = [
     {path:'/admin',component:Admin,name:'Admin'},
     {path:'/institution',component:Institution,name:'Institution'},
     {path:'/analytics',component:Analytics,name:'Analytics'},
+    {path:'/institution/create',component:CreateInstitution,name:'createInstitution'},
 ];
 
 

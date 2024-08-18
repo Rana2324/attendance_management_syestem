@@ -26,7 +26,8 @@
                     <li class="nav-item menu-open">
                         <router-link
                             :to="{ name: 'Dashboard' }"
-                            class="nav-link active"
+                            active-class="active"
+                            class="nav-link"
                         >
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>Dashboard</p>
@@ -35,6 +36,7 @@
                     <li class="nav-item">
                         <router-link
                             :to="{ name: 'Institution' }"
+                            active-class="active"
                             class="nav-link"
                         >
                             <i class="nav-icon fas fa-university"></i>
@@ -42,7 +44,11 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'Admin' }" class="nav-link">
+                        <router-link
+                            :to="{ name: 'Admin' }"
+                            active-class="active"
+                            class="nav-link"
+                        >
                             <i class="nav-icon fas fa-user-shield"></i>
                             <p>Admin</p>
                         </router-link>
@@ -50,6 +56,7 @@
                     <li class="nav-item">
                         <router-link
                             :to="{ name: 'Analytics' }"
+                            active-class="active"
                             class="nav-link"
                         >
                             <i class="nav-icon fas fa-chart-bar"></i>
