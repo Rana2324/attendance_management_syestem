@@ -78,7 +78,28 @@
                                     <td>{{ institution.id }}</td>
                                     <td>{{ institution.name }}</td>
                                     <td>{{ institution.created_at }}</td>
-                                    <td>action</td>
+                                    <td>
+                                        <button
+                                            class="btn btn-sm btn-primary mr-3"
+                                            @click="
+                                                gotoEditInstitution(
+                                                    institution.id
+                                                )
+                                            "
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            class="btn btn-sm btn-danger"
+                                            @click="
+                                                deleteInstitutionHandler(
+                                                    institution.id
+                                                )
+                                            "
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -94,7 +115,7 @@
 import { useInstitutions } from "../../composables/institution";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-const { listInstitutions, showInstitution } = useInstitutions();
+const { listInstitutions, deleteInstitution } = useInstitutions();
 
 const institutions = ref([]);
 const router = useRouter();
@@ -102,8 +123,21 @@ const router = useRouter();
 const gotoCreateInstitution = () => {
     router.push({ name: "createInstitution" });
 };
-
-onMounted(() => {
+const gotoEditInstitution = (id) => {
+    router.push({ name: "editInstitution", params: { id } });
+};
+const deleteInstitutionHandler = (id) => {
+    if (confirm("Are you sure you want to delete this institution?")) {
+        deleteInstitution(id)
+            .then(() => {
+                getInstitution();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+};
+const getInstitution = () => {
     listInstitutions()
         .then((response) => {
             institutions.value = response.data;
@@ -111,6 +145,9 @@ onMounted(() => {
         .catch((error) => {
             console.log(error);
         });
+};
+onMounted(() => {
+    getInstitution();
 });
 </script>
 <style></style>

@@ -11,6 +11,17 @@ export function useInstitutions(){
               });
 
     }
+    const showInstitution =(id) => {
+
+        return axios.get(`/api/institutions/${id}`)
+         .then((response)=>{
+             return response.data;
+         })
+         .catch(error=>{
+           console.log(error)
+         });
+
+}
     const storeInstitution =(payload) => {
 
              return axios.post("/api/institutions",payload)
@@ -22,6 +33,28 @@ export function useInstitutions(){
               });
 
     }
+    const updateInstitution =(id,payload) => {
 
-    return {listInstitutions,storeInstitution};
+             return axios.put(`/api/institutions/${id}`,payload)
+              .then((response)=>{
+                  return response.data;
+              })
+              .catch(error=>{
+                console.log(error)
+              });
+
+    }
+    const deleteInstitution =(id) => {
+
+             return axios.delete(`/api/institutions/${id}`)
+              .then((response)=>{
+                  return response.data;
+              })
+              .catch(error=>{
+                console.log(error)
+              });
+
+    }
+
+    return {listInstitutions,showInstitution,storeInstitution,updateInstitution,deleteInstitution};
 }

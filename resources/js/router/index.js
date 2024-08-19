@@ -4,6 +4,7 @@ import Admin from "../views/SuperAdmin/Admin.vue";
 import Institution from "../views/SuperAdmin/Institution.vue";
 import Analytics from "../views/SuperAdmin/Analytics.vue";
 import CreateInstitution from "../views/SuperAdmin/CreateInstitution.vue";
+import EditeInstitution from "../views/SuperAdmin/EditeInstitution.vue";
 
 
 const routes = [
@@ -12,11 +13,12 @@ const routes = [
     {path:'/institution',component:Institution,name:'Institution'},
     {path:'/analytics',component:Analytics,name:'Analytics'},
     {path:'/institution/create',component:CreateInstitution,name:'createInstitution'},
+    {path:'/institution/edit/:id',component:EditeInstitution,name:'editInstitution'},
 ];
 
 
 const router = createRouter({
-    history:createWebHistory(),
+    history:createWebHistory("/"),
     routes,
 });
 

@@ -1,38 +1,17 @@
-<script setup>
-import { reactive } from "vue";
-import { useRouter } from "vue-router";
-import { useInstitutions } from "../../composables/institution";
-
-const { storeInstitution } = useInstitutions();
-const router = useRouter();
-const payload = reactive({
-    institutionName: "",
-});
-
-const fromSubmit = () => {
-    storeInstitution(payload)
-        .then((response) => {
-            router.push({ name: "Institution" });
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-};
-</script>
-
 <template>
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Create Institution</h1>
+                    <h1 class="m-0">Edit Institution</h1>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">Home</li>
                         <li class="breadcrumb-item">Institution</li>
-                        <li class="breadcrumb-item active">Create</li>
+                        <li class="breadcrumb-item">{{ route.params.id }}</li>
+                        <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div>
                 <!-- /.col -->
@@ -50,11 +29,42 @@ const fromSubmit = () => {
                     />
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </div>
         <!-- /.container-fluid -->
     </div>
 </template>
+<script setup>
+import { reactive, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { useInstitutions } from "../../composables/institution";
+
+const { showInstitution, updateInstitution } = useInstitutions();
+const router = useRouter();
+const route = useRoute();
+const payload = reactive({
+    institutionName: "",
+});
+
+const fromSubmit = () => {
+    updateInstitution(route.params.id, payload)
+        .then((response) => {
+            router.push({ name: "Institution" });
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+onMounted(() => {
+    showInstitution(route.params.id)
+        .then((response) => {
+            payload.institutionName = response.data.name;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+});
+</script>
 
 <style scoped></style>
