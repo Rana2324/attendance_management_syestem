@@ -2,9 +2,13 @@ import './bootstrap';
 import { createApp } from 'vue';
 import pinia from './store/index.js';
 import router from './router';
-import app from './app.vue';
+import App from './app.vue';
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
-createApp(app)
-    .use(router)
-    .use(pinia)
-    .mount('#app')
+
+const app = createApp(App);
+app.use(router)
+app.use(pinia)
+app.use(VueSweetalert2)
+app.mount('#app')
