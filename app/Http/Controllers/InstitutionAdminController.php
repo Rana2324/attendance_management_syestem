@@ -19,9 +19,15 @@ class InstitutionAdminController
             $data = $request->all();
 
             $institution = $this->institutionService->createInstitution($data);
-            return sendSuccessResponse("Institution created successfully", $institution, 201);
+            return sendSuccessResponse(
+                "Institution created successfully",
+                $institution,
+                201
+            );
         } catch (\Exception $ex) {
-            return sendErrorResponse("Failed to create institution: " . $ex->getMessage());
+            return sendErrorResponse(
+                "Failed to create institution: " . $ex->getMessage()
+            );
         }
     }
 
@@ -29,9 +35,15 @@ class InstitutionAdminController
     {
         try {
             $institutions = $this->institutionService->getAllInstitutions();
-            return sendSuccessResponse("Retrieved all institutions successfully", $institutions, 200);
+            return sendSuccessResponse(
+                "Retrieved all institutions successfully",
+                $institutions,
+                200
+            );
         } catch (\Exception $ex) {
-            return sendErrorResponse("Failed to retrieve institutions: " . $ex->getMessage());
+            return sendErrorResponse(
+                "Failed to retrieve institutions: " . $ex->getMessage()
+            );
         }
     }
 
@@ -39,9 +51,15 @@ class InstitutionAdminController
     {
         try {
             $institution = $this->institutionService->getInstitutionById($id);
-            return sendSuccessResponse("Retrieved institution successfully", $institution, 200);
+            return sendSuccessResponse(
+                "Retrieved institution successfully",
+                $institution,
+                200
+            );
         } catch (\Exception $ex) {
-            return sendErrorResponse("Failed to retrieve institution: " . $ex->getMessage());
+            return sendErrorResponse(
+                "Failed to retrieve institution: " . $ex->getMessage()
+            );
         }
     }
 
@@ -50,10 +68,19 @@ class InstitutionAdminController
         try {
             $data = $request->all();
 
-            $institution = $this->institutionService->updateInstitution($id, $data);
-            return sendSuccessResponse("Institution updated successfully", $institution, 200);
+            $institution = $this->institutionService->updateInstitution(
+                $id,
+                $data
+            );
+            return sendSuccessResponse(
+                "Institution updated successfully",
+                $institution,
+                200
+            );
         } catch (\Exception $ex) {
-            return sendErrorResponse("Failed to update institution: " . $ex->getMessage());
+            return sendErrorResponse(
+                "Failed to update institution: " . $ex->getMessage()
+            );
         }
     }
 
@@ -63,7 +90,9 @@ class InstitutionAdminController
             $this->institutionService->deleteInstitution($id);
             return sendSuccessResponse("Institution deleted successfully");
         } catch (\Exception $ex) {
-            return sendErrorResponse("Failed to delete institution: " . $ex->getMessage());
+            return sendErrorResponse(
+                "Failed to delete institution: " . $ex->getMessage()
+            );
         }
     }
 }

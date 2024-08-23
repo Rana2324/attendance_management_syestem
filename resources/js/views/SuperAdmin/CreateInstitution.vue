@@ -1,25 +1,3 @@
-<script setup>
-import { reactive } from "vue";
-import { useRouter } from "vue-router";
-import { useInstitutions } from "../../composables/institution";
-
-const { storeInstitution } = useInstitutions();
-const router = useRouter();
-const payload = reactive({
-    institutionName: "",
-});
-
-const fromSubmit = () => {
-    storeInstitution(payload)
-        .then((response) => {
-            router.push({ name: "Institution" });
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-};
-</script>
-
 <template>
     <div class="content-header">
         <div class="container-fluid">
@@ -56,5 +34,27 @@ const fromSubmit = () => {
         <!-- /.container-fluid -->
     </div>
 </template>
+
+<script setup>
+import { reactive } from "vue";
+import { useRouter } from "vue-router";
+import { useInstitutions } from "../../composables/institution";
+
+const { storeInstitution } = useInstitutions();
+const router = useRouter();
+const payload = reactive({
+    institutionName: "",
+});
+
+const fromSubmit = () => {
+    storeInstitution(payload)
+        .then((response) => {
+            router.push({ name: "Institution" });
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+</script>
 
 <style scoped></style>
