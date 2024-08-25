@@ -39,8 +39,10 @@
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useInstitutions } from "../../composables/institution";
+import { useSwal } from "../../composables/swal";
 
 const { storeInstitution } = useInstitutions();
+
 const router = useRouter();
 const payload = reactive({
     institutionName: "",
@@ -49,9 +51,11 @@ const payload = reactive({
 const fromSubmit = () => {
     storeInstitution(payload)
         .then((response) => {
+            useSwal().fire("success", "Institution created successfully");
             router.push({ name: "Institution" });
         })
         .catch((error) => {
+            useSwal().fire("error", "Failed to create Institution");
             console.log(error);
         });
 };
