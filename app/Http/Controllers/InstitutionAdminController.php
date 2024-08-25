@@ -1,98 +1,70 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Services\InstitutionService;
+use App\Services\AdminService;
 use Illuminate\Http\Request;
 
 class InstitutionAdminController
 {
-    protected $institutionService;
+    protected $adminService;
 
-    public function __construct(InstitutionService $institutionService)
+    public function __construct( AdminService $adminService )
     {
-        $this->institutionService = $institutionService;
+        $this->adminService = $adminService;
     }
-
-    public function storeInstitution(Request $request)
-    {
-        try {
-            $data = $request->all();
-
-            $institution = $this->institutionService->createInstitution($data);
-            return sendSuccessResponse(
-                "Institution created successfully",
-                $institution,
-                201
-            );
-        } catch (\Exception $ex) {
-            return sendErrorResponse(
-                "Failed to create institution: " . $ex->getMessage()
-            );
-        }
-    }
-
-    public function listInstitutions()
-    {
-        try {
-            $institutions = $this->institutionService->getAllInstitutions();
-            return sendSuccessResponse(
-                "Retrieved all institutions successfully",
-                $institutions,
-                200
-            );
-        } catch (\Exception $ex) {
-            return sendErrorResponse(
-                "Failed to retrieve institutions: " . $ex->getMessage()
-            );
-        }
-    }
-
-    public function showInstitution($id)
-    {
-        try {
-            $institution = $this->institutionService->getInstitutionById($id);
-            return sendSuccessResponse(
-                "Retrieved institution successfully",
-                $institution,
-                200
-            );
-        } catch (\Exception $ex) {
-            return sendErrorResponse(
-                "Failed to retrieve institution: " . $ex->getMessage()
-            );
-        }
-    }
-
-    public function updateInstitution(Request $request, $id)
+    //admin part start here
+    public function storeAdmin( Request $request )
     {
         try {
             $data = $request->all();
 
-            $institution = $this->institutionService->updateInstitution(
-                $id,
-                $data
-            );
-            return sendSuccessResponse(
-                "Institution updated successfully",
-                $institution,
-                200
-            );
-        } catch (\Exception $ex) {
-            return sendErrorResponse(
-                "Failed to update institution: " . $ex->getMessage()
-            );
+            $admin = $this->adminService->createAdmin( $data );
+            return sendSuccessResponse( "Admin created successfully", $admin, 201 );
+        } catch ( \Exception $ex ) {
+            return sendErrorResponse( "Failed to create Admin: " . $ex->getMessage() );
         }
     }
 
-    public function deleteInstitution($id)
+    public function adminList()
     {
         try {
-            $this->institutionService->deleteInstitution($id);
-            return sendSuccessResponse("Institution deleted successfully");
-        } catch (\Exception $ex) {
-            return sendErrorResponse(
-                "Failed to delete institution: " . $ex->getMessage()
-            );
+            $admins = $this->adminService->getAllAdmins();
+            return sendSuccessResponse( "Retrieved all Admins successfully", $admins, 200 );
+        } catch ( \Exception $ex ) {
+            return sendErrorResponse( "Failed to retrieve Admins: " . $ex->getMessage() );
         }
     }
+
+    public function showAdmin( $id )
+    {
+        try {
+            $admin = $this->adminService->getAdminById( $id );
+            return sendSuccessResponse( "Retrieved Admin successfully", $admin, 200 );
+        } catch ( \Exception $ex ) {
+            return sendErrorResponse( "Failed to retrieve Admin: " . $ex->getMessage() );
+        }
+    }
+
+    public function updateAdmin( Request $request, $id )
+    {
+        try {
+            $data = $request->all();
+
+            $admin = $this->adminService->updateAdmin( $id, $data );
+            return sendSuccessResponse( "Admin updated successfully", $admin, 200 );
+        } catch ( \Exception $ex ) {
+            return sendErrorResponse( "Failed to update Admin: " . $ex->getMessage() );
+        }
+    }
+
+    public function deleteAdmin( $id )
+    {
+        try {
+            $this->adminService->deleteAdmin( $id );
+            return sendSuccessResponse( "Admin deleted successfully" );
+        } catch ( \Exception $ex ) {
+            return sendErrorResponse( "Failed to delete Admin: " . $ex->getMessage() );
+        }
+    }
+
 }

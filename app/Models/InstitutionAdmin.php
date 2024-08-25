@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class InstitutionAdmin extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','email','institution_id','password'];
+    protected $fillable = ['name', 'email', 'institution_id', 'password'];
 
     public function institution()
     {
-        return $this->hasOne(Institution::class);
+        return $this->belongsTo( Institution::class );
     }
 }

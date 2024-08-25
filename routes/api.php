@@ -2,12 +2,23 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstitutionAdminController;
+use App\Http\Controllers\InstitutionController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/dashboard-count', [DashboardController::class, "dashboardCounts"]);
+Route::get( '/dashboard-count', [DashboardController::class, "dashboardCounts"] );
 
-Route::get('/institutions', [InstitutionAdminController::class, 'listInstitutions']);
-Route::get('/institutions/{id}', [InstitutionAdminController::class, 'showInstitution']);
-Route::post('/institutions', [InstitutionAdminController::class, 'storeInstitution']);
-Route::put('/institutions/{id}', [InstitutionAdminController::class, 'updateInstitution']);
-Route::delete('/institutions/{id}', [InstitutionAdminController::class, 'deleteInstitution']);
+Route::prefix( 'institutions' )->controller( InstitutionController::class )->group( function () {
+    Route::get( '/', 'listInstitutions' );
+    Route::get( '/{id}', 'showInstitution' );
+    Route::post( '/', 'storeInstitution' );
+    Route::put( '/{id}', 'updateInstitution' );
+    Route::delete( '/{id}', 'deleteInstitution' );
+} );
+// Admin routes for institutions
+Route::prefix( 'institution-admin' )->controller( InstitutionAdminController::class )->group( function () {
+    Route::get( '/', 'adminList' );
+    Route::get( '/{id}', 'showAdmin' );
+    Route::post( '/', 'storeAdmin' );
+    Route::put( '/{id}', 'updateAdmin' );
+    Route::delete( '/{id}', 'deleteAdmin' );
+} );

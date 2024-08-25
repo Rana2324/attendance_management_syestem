@@ -57,10 +57,6 @@ const fromSubmit = () => {
         });
 };
 onMounted(() => {
-    this.$swal({
-        text: "Login successfully",
-        icon: "success",
-    });
     showInstitution(route.params.id)
         .then((response) => {
             payload.institutionName = response.data.name;
