@@ -9,7 +9,7 @@ class InstitutionService
     public function createInstitution(array $data)
     {
         return Institution::create([
-            "name" => $data['institutionName']
+            "name" => $data["institutionName"],
         ]);
     }
 
@@ -32,11 +32,13 @@ class InstitutionService
         try {
             $institution = $this->getInstitutionById($id);
             $institution->update([
-                "name" => $data['institutionName']
+                "name" => $data["institutionName"],
             ]);
             return $institution;
         } catch (\Exception $ex) {
-            throw new \Exception("Failed to update institution: " . $ex->getMessage());
+            throw new \Exception(
+                "Failed to update institution: " . $ex->getMessage()
+            );
         }
     }
 
@@ -46,7 +48,9 @@ class InstitutionService
             $institution = $this->getInstitutionById($id);
             $institution->delete();
         } catch (\Exception $ex) {
-            throw new \Exception("Failed to delete institution: " . $ex->getMessage());
+            throw new \Exception(
+                "Failed to delete institution: " . $ex->getMessage()
+            );
         }
     }
 }
