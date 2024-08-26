@@ -39,6 +39,7 @@
 import { reactive, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useInstitutions } from "../../composables/institution";
+import { useSwal } from "../../composables/swal";
 
 const { showInstitution, updateInstitution } = useInstitutions();
 const router = useRouter();
@@ -50,6 +51,7 @@ const payload = reactive({
 const fromSubmit = () => {
     updateInstitution(route.params.id, payload)
         .then((response) => {
+            useSwal().fire("success", "Institution update successfully");
             router.push({ name: "Institution" });
         })
         .catch((error) => {

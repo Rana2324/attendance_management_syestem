@@ -115,6 +115,8 @@
 import { useInstitutions } from "../../composables/institution";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useSwal } from "../../composables/swal";
+
 const { listInstitutions, deleteInstitution } = useInstitutions();
 
 const institutions = ref([]);
@@ -129,10 +131,12 @@ const gotoEditInstitution = (id) => {
 const deleteInstitutionHandler = (id) => {
     if (confirm("Are you sure you want to delete this institution?")) {
         deleteInstitution(id)
-            .then(() => {
+            .then((response) => {
+                useSwal().fire("success", "Institution delete successfully");
                 getInstitution();
             })
             .catch((error) => {
+                useSwal().fire("error", "Institution delete failed");
                 console.log(error);
             });
     }

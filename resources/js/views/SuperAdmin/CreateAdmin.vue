@@ -53,16 +53,6 @@
                         </option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="password">Institution Admin Password</label>
-                    <input
-                        type="password"
-                        class="form-control"
-                        id="password"
-                        v-model="payload.password"
-                        required
-                    />
-                </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -76,6 +66,7 @@ import { reactive, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useInstitutionAdmin } from "../../composables/institutionAdmin";
 import { useInstitutions } from "../../composables/institution";
+import { useSwal } from "../../composables/swal";
 
 const { storeAdmin } = useInstitutionAdmin();
 const { listInstitutions } = useInstitutions();
@@ -85,15 +76,16 @@ const payload = reactive({
     name: "",
     email: "",
     institution_id: "",
-    password: "",
 });
 
 const fromSubmit = () => {
     storeAdmin(payload)
         .then((response) => {
+            useSwal().fire("success", "Institution Admin created successfully");
             router.push({ name: "Admin" });
         })
         .catch((error) => {
+            useSwal().fire("error", "Institution Admin created failed");
             console.log(error);
         });
 };

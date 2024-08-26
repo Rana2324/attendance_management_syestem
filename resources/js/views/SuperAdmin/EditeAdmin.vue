@@ -78,6 +78,7 @@ import { reactive, onMounted, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useInstitutionAdmin } from "../../composables/institutionAdmin";
 import { useInstitutions } from "../../composables/institution";
+import { useSwal } from "../../composables/swal";
 
 const institutionData = ref([]);
 const { showAdmin, updateAdmin } = useInstitutionAdmin();
@@ -94,6 +95,7 @@ const payload = reactive({
 const fromSubmit = () => {
     updateAdmin(route.params.id, payload)
         .then((response) => {
+            useSwal().fire("success", "Institution Admin update successfully");
             router.push({ name: "Admin" });
         })
         .catch((error) => {
@@ -103,9 +105,11 @@ const fromSubmit = () => {
 const getInstitution = () => {
     listInstitutions()
         .then((response) => {
+            useSwal().fire("success", "Institution Admin edite successfully");
             institutionData.value = response.data;
         })
         .catch((error) => {
+            useSwal().fire("error", "Institution Admin  edite  failed");
             console.log(error);
         });
 };

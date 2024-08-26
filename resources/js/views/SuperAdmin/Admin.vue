@@ -119,6 +119,7 @@
 import { useInstitutionAdmin } from "../../composables/institutionAdmin";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useSwal } from "../../composables/swal";
 
 const { adminList, deleteAdmin } = useInstitutionAdmin();
 const institutionAdmin = ref([]);
@@ -133,9 +134,14 @@ const deleteInstitutionAdmin = (id) => {
     if (confirm("Are you sure you want to delete this institution Admin?")) {
         deleteAdmin(id)
             .then(() => {
+                useSwal().fire(
+                    "success",
+                    "Institution Admin delete successfully"
+                );
                 getInstitutionAdmin();
             })
             .catch((error) => {
+                useSwal().fire("error", "Institution Admin delete failed");
                 console.log(error);
             });
     }

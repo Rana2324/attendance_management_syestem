@@ -8,12 +8,16 @@ class AdminService
 
     public function createAdmin( array $data )
     {
-        return InstitutionAdmin::create( [
+        $password = $this->generateEncryptedRandomPassword();
+        $institutionAdmin = InstitutionAdmin::create( [
             'name'           => $data['name'],
             'email'          => $data['email'],
             'institution_id' => $data['institution_id'],
-            'password'       => $data['password'],
+            'password'       => bcrypt($password),
         ] );
+
+        EmailService::sendCreationMailToAdmin($institutionAdmin,$password);
+
     }
 
     public function getAllAdmins()
@@ -48,5 +52,24 @@ class AdminService
     {
         $admin = $this->getAdminById( $id );
         $admin->delete();
+    }
+
+    private function generateEncryptedRandomPassword( $length = 12 )
+    {
+        // Define the characters to use in the password
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
+
+        // Get the length of the characters string
+        $charactersLength = strlen( $characters );
+
+        // Initialize the password variable
+        $randomPassword = '';
+
+        // Generate the password
+        for ( $i = 0; $i < $length; $i++ ) {
+            $randomPassword .= $characters[rand( 0, $charactersLength - 1 )];
+        }
+
+        return $randomPassword;
     }
 }
