@@ -2,10 +2,8 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use App\Services\InstitutionService;
 use App\Models\Institution;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class InstitutionTest extends TestCase
@@ -18,35 +16,35 @@ class InstitutionTest extends TestCase
             "institutionName" => "Test Institution",
         ];
 
-        $response = $this->postJson("/api/institutions", $data);
+        $response = $this->postJson( "/api/institutions", $data );
 
-        $response->assertStatus(201)->assertJson([
+        $response->assertStatus( 201 )->assertJson( [
             "message" => "Institution created successfully",
-            "data" => ["name" => "Test Institution"],
-        ]);
+            "data"    => ["name" => "Test Institution"],
+        ] );
 
-        $this->assertDatabaseHas("institutions", [
+        $this->assertDatabaseHas( "institutions", [
             "name" => "Test Institution",
-        ]);
+        ] );
     }
 
     public function testListInstitutions()
     {
-        $response = $this->get("/api/institutions");
+        $response = $this->get( "/api/institutions" );
 
-        $response->assertStatus(200);
+        $response->assertStatus( 200 );
     }
 
     public function testShowInstitution()
     {
         $institution = Institution::factory()->create();
 
-        $response = $this->getJson("/api/institutions/{$institution->id}");
+        $response = $this->getJson( "/api/institutions/{$institution->id}" );
 
-        $response->assertStatus(200)->assertJson([
+        $response->assertStatus( 200 )->assertJson( [
             "message" => "Retrieved institution successfully",
-            "data" => ["name" => $institution->name],
-        ]);
+            "data"    => ["name" => $institution->name],
+        ] );
     }
 
     public function testUpdateInstitution()
@@ -62,28 +60,28 @@ class InstitutionTest extends TestCase
             $data
         );
 
-        $response->assertStatus(200)->assertJson([
+        $response->assertStatus( 200 )->assertJson( [
             "message" => "Institution updated successfully",
-            "data" => ["name" => "Updated Institution Name"],
-        ]);
+            "data"    => ["name" => "Updated Institution Name"],
+        ] );
 
-        $this->assertDatabaseHas("institutions", [
+        $this->assertDatabaseHas( "institutions", [
             "name" => "Updated Institution Name",
-        ]);
+        ] );
     }
 
     public function testDeleteInstitution()
     {
         $institution = Institution::factory()->create();
 
-        $response = $this->deleteJson("/api/institutions/{$institution->id}");
+        $response = $this->deleteJson( "/api/institutions/{$institution->id}" );
 
-        $response->assertStatus(200)->assertJson([
+        $response->assertStatus( 200 )->assertJson( [
             "message" => "Institution deleted successfully",
-        ]);
+        ] );
 
-        $this->assertDatabaseMissing("institutions", [
+        $this->assertDatabaseMissing( "institutions", [
             "id" => $institution->id,
-        ]);
+        ] );
     }
 }
