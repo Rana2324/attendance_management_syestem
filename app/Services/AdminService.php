@@ -8,16 +8,16 @@ class AdminService
 
     public function createAdmin( array $data )
     {
-        $password = $this->generateEncryptedRandomPassword();
+        $password         = $this->generateEncryptedRandomPassword();
         $institutionAdmin = InstitutionAdmin::create( [
             'name'           => $data['name'],
             'email'          => $data['email'],
             'institution_id' => $data['institution_id'],
-            'password'       => bcrypt($password),
+            'password'       => bcrypt( $password ),
         ] );
 
-        EmailService::sendCreationMailToAdmin($institutionAdmin,$password);
-
+        EmailService::sendCreationMailToAdmin( $institutionAdmin, $password );
+        return $institutionAdmin;
     }
 
     public function getAllAdmins()
@@ -39,10 +39,10 @@ class AdminService
         $admin = $this->getAdminById( $id );
 
         $admin->update( [
-            'name'           => $data['name'],
-            'email'          => $data['email'],
-            'institution_id' => $data['institution_id'],
-            'password'       => $data['password'] ? $data['password'] : $admin->password,
+            'name'           => $data['name'] ?? $admin->name,
+            'email'          => $data['email'] ?? $admin->email,
+            'institution_id' => $data['institution_id'] ?? $admin->institution_id,
+            'password'       => isset( $data['password'] ) && $data['password'] !== '' ? bcrypt( $data['password'] ) : $admin->password,
         ] );
 
         return $admin;

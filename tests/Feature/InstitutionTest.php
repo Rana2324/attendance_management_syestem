@@ -8,7 +8,8 @@ use Tests\TestCase;
 
 class InstitutionTest extends TestCase
 {
-    use RefreshDatabase;
+     use RefreshDatabase;
+    // use DatabaseMigrations;
 
     public function testStoreInstitution()
     {
