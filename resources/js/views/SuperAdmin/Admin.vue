@@ -80,9 +80,9 @@
                                     :key="item.id"
                                 >
                                     <td>{{ item.id }}</td>
-                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.user.name }}</td>
                                     <td>{{ item.institution.name }}</td>
-                                    <td>{{ item.email }}</td>
+                                    <td>{{ item.user.email }}</td>
                                     <td>{{ item.created_at }}</td>
                                     <td>
                                         <button

@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('institution_admins', function (Blueprint $table) {
+        Schema::create( 'institution_admins', function ( Blueprint $table ) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->unsignedBigInteger('institution_id');
-            $table->string('password');
+            $table->unsignedBigInteger( 'institution_id' );
+
             $table->timestamps();
 
-            $table->foreign('institution_id')->references('id')->on('institutions');
-        });
-
+            $table->unsignedBigInteger( 'user_id' )->nullable();
+            $table->foreign( 'user_id' )->references( 'id' )->on( 'users' );
+            $table->foreign( 'institution_id' )->references( 'id' )->on( 'institutions' );
+        } );
 
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('institution_admins');
+        Schema::dropIfExists( 'institution_admins' );
     }
 };

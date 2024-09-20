@@ -32,6 +32,6 @@ class SendAdminCreationMailJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to( $this->institutionAdmin->email )->send( new AdminCreationMail( $this->institutionAdmin, $this->password ) );
+        Mail::to( $this->institutionAdmin->user->email )->send( new AdminCreationMail( $this->institutionAdmin, $this->password ) );
     }
 }

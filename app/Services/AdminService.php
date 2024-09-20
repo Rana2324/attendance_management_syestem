@@ -2,33 +2,44 @@
 namespace App\Services;
 
 use App\Models\InstitutionAdmin;
+use App\Models\Role;
+use App\Models\User;
 
 class AdminService
 {
 
     public function createAdmin( array $data )
     {
-        $password         = $this->generateEncryptedRandomPassword();
+
+        $password    = $this->generateEncryptedRandomPassword();
+        $adminRollId = Role::where( 'name', Role::ADMIN )->latest()->first();
+
+        $user = User::create( [
+            'name'     => $data['name'],
+            'email'    => $data['email'],
+            'password' => bcrypt( $password ),
+            'role_id'  => $adminRollId->id,
+        ] );
+
         $institutionAdmin = InstitutionAdmin::create( [
-            'name'           => $data['name'],
-            'email'          => $data['email'],
             'institution_id' => $data['institution_id'],
-            'password'       => bcrypt( $password ),
+            'user_id'        => $user->id,
         ] );
 
         EmailService::sendCreationMailToAdmin( $institutionAdmin, $password );
-        return $institutionAdmin;
+        return $user;
     }
 
     public function getAllAdmins()
     {
-        return InstitutionAdmin::with( 'institution' )->get();
+        return InstitutionAdmin::with( 'institution', 'user' )->get();
+
     }
 
     public function getAdminById( $id )
     {
         try {
-            return InstitutionAdmin::findOrFail( $id );
+            return InstitutionAdmin::with( 'institution', 'user' )->findOrFail( $id );
         } catch ( \Exception $ex ) {
             throw new \Exception( "Institution Admin not found for ID " . $id );
         }
@@ -36,16 +47,19 @@ class AdminService
 
     public function updateAdmin( $id, array $data )
     {
-        $admin = $this->getAdminById( $id );
+        // Find the user or throw an exception if not found
+        $institutionAdmin = $this->getAdminById( $id );
 
-        $admin->update( [
-            'name'           => $data['name'] ?? $admin->name,
-            'email'          => $data['email'] ?? $admin->email,
-            'institution_id' => $data['institution_id'] ?? $admin->institution_id,
-            'password'       => isset( $data['password'] ) && $data['password'] !== '' ? bcrypt( $data['password'] ) : $admin->password,
+        // Update the user data
+        $institutionAdmin->user->update( [
+            'name'  => $data['name'],
+            'email' => $data['email'],
+
         ] );
-
-        return $admin;
+        $institutionAdmin = $institutionAdmin->update( [
+            'institution_id' => $data['institution_id'],
+        ] );
+        return $institutionAdmin;
     }
 
     public function deleteAdmin( $id )

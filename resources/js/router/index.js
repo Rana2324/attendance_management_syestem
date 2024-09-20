@@ -7,6 +7,7 @@ import CreateInstitution from "../views/SuperAdmin/CreateInstitution.vue";
 import EditeInstitution from "../views/SuperAdmin/EditeInstitution.vue";
 import CreateAdmin from "../views/SuperAdmin/CreateAdmin.vue";
 import EditeAdmin from "../views/SuperAdmin/EditeAdmin.vue";
+import Login from "../views/Auth/Login.vue";
 
 const routes = [
     { path: "/", component: Dashboard, name: "Dashboard" },
@@ -32,6 +33,11 @@ const routes = [
         path: "/institution-admin/edit/:id",
         component: EditeAdmin,
         name: "editeAdmin",
+    },
+    {
+        path: "/login",
+        component: Login,
+        name: "Login",
     },
 ];
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstitutionAdminController;
 use App\Http\Controllers\InstitutionController;
@@ -22,3 +23,7 @@ Route::prefix( 'institution-admin' )->controller( InstitutionAdminController::cl
     Route::put( '/{id}', 'updateAdmin' );
     Route::delete( '/{id}', 'deleteAdmin' );
 } );
+
+//Login api
+
+Route::post( '/login', [AuthController::class, 'login'] );

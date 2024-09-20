@@ -71,13 +71,13 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Welcome, {{ $institutionAdmin->name }}</h1>
+            <h1>Welcome, {{ $institutionAdmin->user->name }}</h1>
         </div>
         <div class="content">
             <p>Your account has been successfully created on our platform.</p>
             <p>We’re excited to have you on board! Below are your login credentials:</p>
             <div class="credentials">
-                <p>Email: {{ $institutionAdmin->email }}</p>
+                <p>Email: {{ $institutionAdmin->user->email }}</p>
                 <p>Password: {{ $password }}</p>
             </div>
             <p>Please keep this information safe and secure. You can change your password after your first login.</p>

@@ -55,18 +55,6 @@
                         </option>
                     </select>
                 </div>
-
-                <div class="form-group">
-                    <label for="password">Institution Admin Password</label>
-                    <input
-                        type="password"
-                        class="form-control"
-                        id="password"
-                        v-model="payload.password"
-                        required
-                    />
-                </div>
-
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </div>
@@ -91,7 +79,6 @@ const payload = reactive({
     institution_id: "",
     password: "",
 });
-
 const fromSubmit = () => {
     updateAdmin(route.params.id, payload)
         .then((response) => {
@@ -113,15 +100,17 @@ const getInstitution = () => {
             console.log(error);
         });
 };
+
 onMounted(() => {
     getInstitution();
     showAdmin(route.params.id)
         .then((response) => {
-            payload.name = response.data.name;
-            payload.email = response.data.email;
+            console.log(response);
+            payload.name = response.data.user.name;
+            payload.email = response.data.user.email;
             payload.institution_id = response.data.institution_id;
-            payload.password = response.data.password;
         })
+
         .catch((error) => {
             console.log(error);
         });

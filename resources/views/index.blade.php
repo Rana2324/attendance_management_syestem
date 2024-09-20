@@ -19,7 +19,7 @@
     @vite(['resources/js/app.js'])
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" id="body">
     <div id="app" class="wrapper">
 
     </div>

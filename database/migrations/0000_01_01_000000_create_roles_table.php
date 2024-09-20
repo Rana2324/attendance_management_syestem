@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create( 'super_admins', function ( Blueprint $table ) {
+        Schema::create( 'roles', function ( Blueprint $table ) {
             $table->id();
-
-            $table->unsignedBigInteger( 'users_id' )->nullable();
-            $table->foreign( 'users_id' )->references( 'id' )->on( 'users' );
+            $table->string( 'name' );
             $table->timestamps();
         } );
-
     }
 
     /**
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists( 'super_admins' );
+        Schema::dropIfExists( 'roles' );
     }
 };
