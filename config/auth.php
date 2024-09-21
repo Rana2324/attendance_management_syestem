@@ -11,11 +11,11 @@ return [
     | reset "broker" for your application. You may change these values
     | as required, but they're a perfect start for most applications.
     |
-    */
+     */
 
-    'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+    'defaults'         => [
+        'guard'     => env( 'AUTH_GUARD', 'web' ),
+        'passwords' => env( 'AUTH_PASSWORD_BROKER', 'users' ),
     ],
 
     /*
@@ -33,12 +33,19 @@ return [
     |
     | Supported: "session"
     |
-    */
+     */
 
-    'guards' => [
+    'guards'           => [
         'web' => [
-            'driver' => 'session',
+            'driver'   => 'session',
             'provider' => 'users',
+        ],
+    ],
+    'guards'           => [
+        'api' => [
+            'driver'   => 'sanctum',
+            'provider' => 'users',
+            'hash'     => false,
         ],
     ],
 
@@ -57,12 +64,12 @@ return [
     |
     | Supported: "database", "eloquent"
     |
-    */
+     */
 
-    'providers' => [
+    'providers'        => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model'  => env( 'AUTH_MODEL', App\Models\User::class ),
         ],
 
         // 'users' => [
@@ -88,13 +95,13 @@ return [
     | generating more password reset tokens. This prevents the user from
     | quickly generating a very large amount of password reset tokens.
     |
-    */
+     */
 
-    'passwords' => [
+    'passwords'        => [
         'users' => [
             'provider' => 'users',
-            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
-            'expire' => 60,
+            'table'    => env( 'AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens' ),
+            'expire'   => 60,
             'throttle' => 60,
         ],
     ],
@@ -108,8 +115,8 @@ return [
     | window expires and users are asked to re-enter their password via the
     | confirmation screen. By default, the timeout lasts for three hours.
     |
-    */
+     */
 
-    'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
+    'password_timeout' => env( 'AUTH_PASSWORD_TIMEOUT', 10800 ),
 
 ];

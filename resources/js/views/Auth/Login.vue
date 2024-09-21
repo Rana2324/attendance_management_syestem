@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template>
     <div
         class="d-flex justify-content-center align-items-center"
@@ -13,10 +11,19 @@
             <div class="card">
                 <div class="card-body login-card-body">
                     <p class="login-box-msg">Sign in to start your session</p>
+                    <!-- Display Error Message -->
+                    <div v-if="errorMessage" class="alert alert-danger">
+                        {{ errorMessage }}
+                    </div>
 
-                    <form action="../../index3.html" method="post">
+                    <!-- Display Success Message -->
+                    <div v-if="successMessage" class="alert alert-success">
+                        {{ successMessage }}
+                    </div>
+                    <form @submit.prevent="formSubmit">
                         <div class="input-group mb-3">
                             <input
+                                v-model="payload.email"
                                 type="email"
                                 class="form-control"
                                 placeholder="Email"
@@ -29,6 +36,7 @@
                         </div>
                         <div class="input-group mb-3">
                             <input
+                                v-model="payload.password"
                                 type="password"
                                 class="form-control"
                                 placeholder="Password"
@@ -81,11 +89,40 @@
                         >
                     </p>
                 </div>
-                <!-- /.login-card-body -->
             </div>
+            <!-- /.login-box -->
         </div>
-        <!-- /.login-box -->
     </div>
 </template>
+<script setup>
+import { useAuth } from "../../composables/auth";
+import { useRouter } from "vue-router";
+import { ref, reactive } from "vue";
+import { useSwal } from "../../composables/swal";
+
+// Define reactive form fields
+const { login } = useAuth();
+const payload = reactive({
+    email: "",
+    password: "",
+});
+
+const errorMessage = ref("");
+const successMessage = ref("");
+const router = useRouter();
+const formSubmit = () => {
+    login(payload)
+        .then((response) => {
+            useSwal().fire("success", "Login successfull");
+            if (response.data.role.name === "SUPER_ADMIN") {
+                router.push({ name: "SuperAdmin" });
+            }
+        })
+        .catch((error) => {
+            useSwal().fire("error", "Login failed");
+            console.log(error);
+        });
+};
+</script>
 
 <style scoped></style>
