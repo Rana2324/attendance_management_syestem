@@ -23,9 +23,9 @@
                 >
                     <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                    <li class="nav-item menu-open">
+                    <li class="nav-item">
                         <router-link
-                            :to="{ name: 'Dashboard' }"
+                            :to="{ name: 'SuperAdminDashboard' }"
                             active-class="active"
                             class="nav-link"
                         >
