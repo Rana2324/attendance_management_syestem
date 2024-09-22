@@ -13,8 +13,10 @@ class AuthController
             $credentials = $request->only( 'email', 'password' );
 
             if ( Auth::attempt( $credentials ) ) {
+                $token = auth()->user()->createToken( 'Token' )->plainTextToken;
+                $data  = array_merge( auth()->user()->load( ['role'] )->toArray(), ['token' => $token] );
 
-                return sendSuccessResponse( "Login Successfull", auth()->user()->load( ['role'] ) );
+                return sendSuccessResponse( "Login Successfull", $data );
             } else {
                 return sendErrorResponse( "Invalid Login Credentials", [], 403 );
             }

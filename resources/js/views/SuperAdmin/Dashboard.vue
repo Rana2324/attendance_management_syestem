@@ -79,7 +79,12 @@ const stats = reactive({
 // Fetch data from API
 const fetchStats = async () => {
     try {
-        const response = await axios.get("/api/dashboard-count");
+        let token = localStorage.getItem("token");
+        const response = await axios.get("/api/dashboard-count", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         if (response.data.data && typeof response.data.data === "object") {
             stats.institutions.count = response.data.data.institutions;
             stats.teachers.count = response.data.data.teachers;

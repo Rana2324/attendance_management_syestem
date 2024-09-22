@@ -11,15 +11,7 @@
             <div class="card">
                 <div class="card-body login-card-body">
                     <p class="login-box-msg">Sign in to start your session</p>
-                    <!-- Display Error Message -->
-                    <div v-if="errorMessage" class="alert alert-danger">
-                        {{ errorMessage }}
-                    </div>
 
-                    <!-- Display Success Message -->
-                    <div v-if="successMessage" class="alert alert-success">
-                        {{ successMessage }}
-                    </div>
                     <form @submit.prevent="formSubmit">
                         <div class="input-group mb-3">
                             <input
@@ -97,7 +89,7 @@
 <script setup>
 import { useAuth } from "../../composables/auth";
 import { useRouter } from "vue-router";
-import { ref, reactive } from "vue";
+import { reactive } from "vue";
 import { useSwal } from "../../composables/swal";
 
 // Define reactive form fields
@@ -106,15 +98,13 @@ const payload = reactive({
     email: "",
     password: "",
 });
-
-const errorMessage = ref("");
-const successMessage = ref("");
 const router = useRouter();
 const formSubmit = () => {
     login(payload)
         .then((response) => {
             useSwal().fire("success", "Login successfull");
             if (response.data.role.name === "SUPER_ADMIN") {
+                localStorage.setItem("token", response.data.token);
                 router.push({ name: "SuperAdmin" });
             }
         })
